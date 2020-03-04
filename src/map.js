@@ -54,23 +54,26 @@ function highlightFeature(e) {
   }
 }
 var clicked = false;
-var prevLayer;
+var prev;
 
 function resetHighlight(e) {
-  if (e.target != prevLayer) {
+  if (e != prev) {
     geojson.resetStyle(e.target);
+  }
+  if (prev != undefined) {
+    highlightFeature(prev)
   }
 }
 
 
 function zoomToFeature(e) {
-  if (prevLayer != undefined) {
-    geojson.resetStyle(prevLayer);
+  if (prev != undefined) {
+    geojson.resetStyle(prev.target);
   }
   highlightFeature(e)
   clicked = true;
   var layer = e.target;
-  prevLayer = layer;
+  prev = e;
   window.countryCode = layer.feature.properties.adm0_a3;
   mymap.fitBounds(layer.getBounds());
   document.getElementById("noData").style.display = "none";
