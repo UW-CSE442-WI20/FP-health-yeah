@@ -135,7 +135,7 @@ function showGraph(year) {
     if (d.length == 0) {
       var element = document.getElementById("noData");
       element.style.display = "block";
-      element.innerHTML += "<h3>No Data Found for " + window.countryCode + " </h3>";
+      element.innerHTML = "<h3>No Data Found for " + window.countryCode + " </h3>";
       document.getElementById("chartContainer").style.display = "none";
       document.getElementById("pieContainer").style.display = "none";
     }
