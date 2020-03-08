@@ -8,6 +8,24 @@ h1 {
     margin-left: 0.6%;
 }
 
+h2 {
+    width: 100%;
+    font-family: avenir;
+    color: #003366;
+}
+
+p {
+    font-family: avenir;
+}
+
+#definition {
+    width: 40%; 
+    display: inline-block;
+    height: 200px;
+    vertical-align: middle;
+    margin-left: 8%;
+}
+
 #selection {
     text-align: center;
     position: -webkit-sticky; /* Safari */
@@ -122,3 +140,24 @@ select {
 canvas.canvasjs-chart-canvas {
     float: right;
 }
+
+#topBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: #A1BFCF;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  
+  #topBtn:hover {
+    background-color: #003366;
+  }
