@@ -10,7 +10,7 @@ const d3 = require('d3');
 
 
 // Prevalence of mental health disorders by disorder type
-const csvFile = require('../prevalence-by-mental-and-substance-use-disorder.csv');
+const csvFile = require('../total-data.csv');
 
 // You can load JSON files directly via require.
 // Note this does not add a network request, it adds
@@ -32,7 +32,8 @@ var all_data = d3.csv(csvFile, function(data) {
       anxiety: +data["Anxiety disorders (%)"],
       drug: +data["Drug use disorders (%)"],
       depression: +data["Depression (%)"],
-      alcohol: +data["Alcohol use disorders (%)"]
+      alcohol: +data["Alcohol use disorders (%)"],
+      total: +data["total (%)"]
   };
 });
 
@@ -150,7 +151,8 @@ function showGraph(year) {
         },
         axisY: {
           title: "Country's Population (%)",
-          suffix: " %"
+          suffix: " %",
+          maximum: 9.0,
         },
         data: [{
           type: "bar",	
@@ -198,6 +200,17 @@ function showGraph(year) {
 
   setInterval(function() {updateChart()}, 500);*/
 
+}
+
+function getColor(d) {
+  return d > 17 ? '#800026' :
+         d > 15  ? '#BD0026' :
+         d > 13  ? '#E31A1C' :
+         d > 11  ? '#FC4E2A' :
+         d > 9   ? '#FD8D3C' :
+         d > 7   ? '#FEB24C' :
+                  '#FFEDA0';
+                    
 }
 
 // Update the current slider value and render a new plot
