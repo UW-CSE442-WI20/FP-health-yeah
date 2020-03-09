@@ -40,8 +40,11 @@ window.all_data = all_data
 
 var slider = document.getElementById("yearRange");
 var output = document.getElementById("yearDisplay");
+var disorder = document.getElementById("disorder");
+
 output.innerHTML = slider.value; // Display the default slider value
 window.sliderYear = slider.value;
+window.disorder_type = disorder.value;
 // returns a Promise of filtered csv array from all_data
 function filter_data_country(c) {
   return all_data.then(function(d) {
@@ -213,7 +216,10 @@ slider.oninput = function() {
   showPie(this.value);
   window.updateMap();
 }
-
+disorder.oninput = function() {
+  window.disorder_type = disorder.value;
+  window.updateMap();
+}
 window.showGraph = showGraph;
 window.showPie = showPie;
 
