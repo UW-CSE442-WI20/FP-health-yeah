@@ -36,21 +36,22 @@ var all_data = d3.csv(csvFile, function(data) {
       total: +data["total (%)"]
   };
 });
-
+window.all_data = all_data
 
 var slider = document.getElementById("yearRange");
 var output = document.getElementById("yearDisplay");
 output.innerHTML = slider.value; // Display the default slider value
 window.sliderYear = slider.value;
 // returns a Promise of filtered csv array from all_data
-function filter_data_country() {
+function filter_data_country(c) {
   return all_data.then(function(d) {
       var d_filtered =  d.filter(function(row) {
-          return row["code"] == window.countryCode;
+          return row["code"] == c;
       });
       return d_filtered;
   });
 }
+window.filter_data_country = filter_data_country;
 
 function filter_data_year(data, year) {
   return data.then(function(d) {
@@ -60,11 +61,12 @@ function filter_data_year(data, year) {
     return d_filtered;
   });
 }
+window.filter_data_year = filter_data_year;
 
 // var counterPie = 1;
 
 function showPie(year) {
-  var data = filter_data_country();
+  var data = filter_data_country(window.countryCode);
 
   filter_data_year(data, year).then(function(d) {
     d.map(function(row) {
@@ -131,7 +133,7 @@ function showPie(year) {
 
 
 function showGraph(year) {
-  var data = filter_data_country();
+  var data = filter_data_country(window.countryCode);
   filter_data_year(data, year).then(function(d) {
     if (d.length == 0) {
       var element = document.getElementById("noData");
@@ -202,16 +204,6 @@ function showGraph(year) {
 
 }
 
-function getColor(d) {
-  return d > 17 ? '#800026' :
-         d > 15  ? '#BD0026' :
-         d > 13  ? '#E31A1C' :
-         d > 11  ? '#FC4E2A' :
-         d > 9   ? '#FD8D3C' :
-         d > 7   ? '#FEB24C' :
-                  '#FFEDA0';
-                    
-}
 
 // Update the current slider value and render a new plot
 slider.oninput = function() {
@@ -219,7 +211,9 @@ slider.oninput = function() {
   window.sliderYear = this.value;
   showGraph(this.value);
   showPie(this.value);
+  window.updateMap();
 }
 
 window.showGraph = showGraph;
 window.showPie = showPie;
+
