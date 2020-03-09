@@ -1,3 +1,6 @@
+// Code adapted from https://css-tricks.com/blobs/
+// Create circle animation for decoration
+
 let canvas, ctx;
 let render, init;
 let blob;

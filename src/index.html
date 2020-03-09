@@ -18,7 +18,7 @@
   <body>
     <script src="./bubbleAnimation.js" style="display: flex"></script>
     <h1>Health Yeah</h1>
-    <p style="font-family: avenir; text-align: center; margin-top: 5%;">Our map reflects mental health situations around the world! Try clicking on different countries!<br>
+    <p style="text-align: center; margin-top: 5%;">Our map reflects mental health situations around the world! Try clicking on different countries!<br>
       The charts reflect the percentages of each disorder among the total population in the current country in each year<br>
       We can see that the percentages change slightly among different years<br>
     </p>
@@ -58,10 +58,59 @@
           </div>
         </div>
     </div>
-    
+
+    <!-- back to top button -->
+    <button onclick="body.scrollTop = 0; documentElement.scrollTop = 0;" id="topBtn" title="Back to top">Top</button>
+  
+     <!-- definitions -->
+    <div style="height: 800px; width: 80%; margin-left: auto; margin-right: auto; margin-top: 80px; justify-content: center; margin-bottom: 80px;">
+      <div>
+      <div id="definition">
+        <h2>Schizophrenia</h2>
+        <p>A long-term mental disorder of a type involving a breakdown in the relation between thought, emotion, and behavior, leading to faulty perception, inappropriate actions and feelings, withdrawal from reality and personal relationships into fantasy and delusion, and a sense of mental fragmentation.
+        </p>
+      </div>
+      <div id="definition">
+        <h2>Bipolar Disorder</h2>
+        <p>A mental disorder that causes unusual shifts in mood, energy, activity levels, concentration, and the ability to carry out day-to-day tasks.</p>
+      </div>
+      </div>
+
+      <div>
+        <div id="definition">
+          <h2>Eating Disorder</h2>
+          <p>Eating disorders are illnesses in which the people experience severe disturbances in their eating behaviors and related thoughts and emotions. People with eating disorders typically become pre-occupied with food and their body weight.</p>
+        </div>
+        <div id="definition">
+          <h2>Anxiety Disorders</h2>
+          <p>Anxiety disorders are a group of mental disorders characterized by significant feelings of anxiety and fear. Anxiety is a worry about future events, and fear is a reaction to current events. These feelings may cause physical symptoms, such as a fast heart rate and shakiness.</p>
+         </div>
+      </div>
+
+      <div>
+        <div id="definition">
+          <h2>Drug Use Disorder</h2>
+          <p>Drug addiction, also called substance use disorder, is a disease that affects a person's brain and behavior and leads to an inability to control the use of a legal or illegal drug or medication. Substances such as alcohol, marijuana and nicotine also are considered drugs.</p>
+        </div>
+        <div id="definition">
+          <h2>Depression</h2>
+          <p>Depression (major depressive disorder) is a common and serious medical illness that negatively affects how you feel, the way you think and how you act. Fortunately, it is also treatable. Depression causes feelings of sadness and/or a loss of interest in activities once enjoyed. It can lead to a variety of emotional and physical problems and can decrease a person’s ability to function at work and at home.</p>
+        </div>
+      </div>
+
+      <div>
+        <div id="definition">
+          <h2>Alcohol Use Disorder</h2>
+          <p>Alcohol use disorder (which includes a level that's sometimes called alcoholism) is a pattern of alcohol use that involves problems controlling your drinking, being preoccupied with alcohol, continuing to use alcohol even when it causes problems, having to drink more to get the same effect, or having withdrawal symptoms when you rapidly decrease or stop drinking.</p>
+        </div>
+      </div>
+    </div>
+
+   
     <script src="./index.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="./map.js"></script>
+    <script src="./backToTopBtn.js"></script>
 
   </body>
 </html>
