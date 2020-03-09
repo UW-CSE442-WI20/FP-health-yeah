@@ -1,5 +1,10 @@
 
 import "babel-polyfill";
+var country2total = new Map();
+var geojson;
+var mymap;
+var prev;
+var redo_map;
 
 if (mymap != undefined) { mymap.remove(); }
 mymap = L.map('mapid', {
@@ -25,23 +30,16 @@ noWrap: true,
 bounds: bounds,
 center: bounds.getCenter()
 }).addTo(mymap);
+geojson = L.geoJson(window.countriesData, {
+  style: style,
+  onEachFeature: onEachFeature
+})
+geojson.addTo(mymap);
 
 
-var country2total = new Map();
-var geojson;
-var mymap;
-var prev;
-var redo_map;
 
 function drawAll() {
-  if (geojson != undefined) {
-    mymap.removeLayer(geojson);
-  }
-  geojson = L.geoJson(window.countriesData, {
-    style: style,
-    onEachFeature: onEachFeature
-  })
-  geojson.addTo(mymap);
+  geojson.resetStyle();
   if (prev != undefined) {
     zoomToFeature(prev);
   }
@@ -89,7 +87,6 @@ function style(feature) {
 }
 
 function highlightFeature(e) {
-  console.log(e);
   var layer = e.target;
   layer.setStyle({
       weight: 5,
@@ -97,7 +94,6 @@ function highlightFeature(e) {
       dashArray: '',
       fillOpacity: 0.7
   });
-  console.log("HI");
   if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
       layer.bringToFront();
   }
