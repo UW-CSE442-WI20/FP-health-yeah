@@ -44,71 +44,24 @@ function drawAll() {
   }
 }
 
-function rgbaToHex(color) {
-  var values = color
-    .replace(/rgba?\(/, '')
-    .replace(/\)/, '')
-    .replace(/[\s+]/g, '')
-    .split(',');
-  var a = parseFloat(values[3] || 1),
-    r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
-    g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
-    b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
-
-  return "#" +
-    ("0" + r.toString(16)).slice(-2) +
-    ("0" + g.toString(16)).slice(-2) +
-    ("0" + b.toString(16)).slice(-2);
-}
-
-function getColorByNumber(n,max) {
-  let halfMax = max / 2  //最大数值的二分之一
-    //var 百分之一 = (单色值范围) / halfMax;  单颜色的变化范围只在50%之内
-    var one = 255 / halfMax; 
-    var r = 0;
-    var g = 0;
-    var b = 0;
-
-
-    if (n < halfMax) {
-      // 比例小于halfMax的时候红色是越来越多的,直到红色为255时(红+绿)变为黄色.
-      r = one * n;  
-      g = 255;
-    }
-
-    if (n >= halfMax) {
-      // 比例大于halfMax的时候绿色是越来越少的,直到0 变为纯红
-      g = (255 - ((n - halfMax) * one)) < 0 ? 0 : (255 - ((n - halfMax) * one))
-      r = 255;
-
-    }
-    r = parseInt(r);// 取整
-    g = parseInt(g);// 取整
-    b = parseInt(b);// 取整
-
-    // console.log(r,g,b)
-    return rgbaToHex("rgb(" + r + "," + g + "," + b + ")");
-}
 
 function getColor(d) {
-  return getColorByNumber(d, 17);
-  // if (window.disorder_type == "total") {
-  //   return d > 17 ? '#800026' :
-  //           d > 15  ? '#BD0026' :
-  //           d > 13  ? '#E31A1C' :
-  //           d > 11  ? '#FC4E2A' :
-  //           d > 9   ? '#FD8D3C' :
-  //           d > 7   ? '#FEB24C' :
-  //                   '#FFEDA0';
-  //   } else{  
-  //     return d > 7 ? '#800026' :
-  //             d > 6  ? '#BD0026' :
-  //             d > 5  ? '#E31A1C' :
-  //             d > 4  ? '#FC4E2A' :
-  //             d > 3  ? '#FD8D3C' :
-  //             d > 2  ? '#FEB24C' :
-  //                       '#FFEDA0';                   
-  //   }
+  return  d == undefined? 'white':
+          d > 17 ? '#94495D' :
+          d > 15  ? '#A65158' :
+          d > 13  ? '#B76459' :
+          d > 11  ? '#DBA169' :
+          d > 9   ? '#EDC570' :
+          d > 7   ? '#FFED78' :
+          d > 5   ? '#FDD686' :
+          d > 3   ? '#FBC493' :
+          d > 2   ? '#FAB9A0' :
+          d > 1   ? '#F9B3AD' :
+          d > 0.5 ? '#F8B9C0' :
+          d > 0.4 ? '#F8C5D5' :
+          d > 0.3 ? '#F8D0E4' :
+          d > 0.2 ? '#F9DBF0' :
+          '#FAE5F8';
 }
 
 var legend
@@ -125,14 +78,14 @@ async function updateMap() {
   legend.onAdd = function (mymap) {
       if (window.disorder_type == "total") {
         var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 7, 9, 11, 13, 15, 17],
-        labels = [];
+        grades = [0, 5, 7, 9, 11, 13, 15, 17];
+      } else if (["bipolar", "eating", "schizophrenia"].includes(window.disorder_type)) {
+        var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 0.2, 0.3, 0.4, 0.5];
       } else {
         var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 1, 2, 3, 4, 5, 6],
-        labels = [];
+        grades = [0, 0.8, 1, 3, 5, 7];
       }
-
       // loop through our density intervals and generate a label with a colored square for each interval
       for (var i = 0; i < grades.length; i++) {
           div.innerHTML +=
