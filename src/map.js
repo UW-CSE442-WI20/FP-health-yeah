@@ -4,7 +4,6 @@ var country2total = new Map();
 var geojson;
 var mymap;
 var prev;
-var redo_map;
 
 if (mymap != undefined) { mymap.remove(); }
 mymap = L.map('mapid', {
@@ -111,7 +110,7 @@ function resetHighlight(e) {
 
 
 function zoomToFeature(e) {
-  if (prev != undefined && !redo_map) {
+  if (prev != undefined) {
     geojson.resetStyle(prev.target);
   }
   highlightFeature(e)
@@ -139,6 +138,16 @@ function onEachFeature(feature, layer) {
       click: zoomToFeature
   });
 }
+
+function resetMap() {
+  mymap.fitBounds(bounds);
+  if (prev != undefined) {
+    geojson.resetStyle(prev.target);
+    prev = undefined;
+  }
+}
+
+window.resetMap = resetMap;
 
 var legend = L.control({position: 'bottomright'});
 

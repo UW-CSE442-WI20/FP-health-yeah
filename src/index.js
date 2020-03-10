@@ -17,6 +17,7 @@ document.getElementById("close").onclick = function() {
   dp.remove("beige");
   var jiu = document.getElementById("jiu-definition").classList;
   jiu.remove("beige");
+  window.resetMap();
 }
 
 // You can require libraries
