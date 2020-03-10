@@ -45,20 +45,57 @@ function drawAll() {
 }
 
 function getColor(d) {
-  return d > 17 ? '#800026' :
-         d > 15  ? '#BD0026' :
-         d > 13  ? '#E31A1C' :
-         d > 11  ? '#FC4E2A' :
-         d > 9   ? '#FD8D3C' :
-         d > 7   ? '#FEB24C' :
-                  '#FFEDA0';                   
+  if (window.disorder_type == "total") {
+    return d > 17 ? '#800026' :
+            d > 15  ? '#BD0026' :
+            d > 13  ? '#E31A1C' :
+            d > 11  ? '#FC4E2A' :
+            d > 9   ? '#FD8D3C' :
+            d > 7   ? '#FEB24C' :
+                    '#FFEDA0';
+    } else{  
+      return d > 7 ? '#800026' :
+              d > 6  ? '#BD0026' :
+              d > 5  ? '#E31A1C' :
+              d > 4  ? '#FC4E2A' :
+              d > 3  ? '#FD8D3C' :
+              d > 2  ? '#FEB24C' :
+                        '#FFEDA0';                   
+    }
 }
 
-
+var legend
 async function updateMap() {
   country2total.clear();
   await updateCountry2total();
   drawAll();
+  if (legend != undefined) {
+    mymap.removeControl(legend);
+    console.log("HERE");
+  }
+  legend = L.control({position: 'bottomright'});
+
+  legend.onAdd = function (mymap) {
+      if (window.disorder_type == "total") {
+        var div = L.DomUtil.create('div', 'info legend'),
+        grades = [0, 7, 9, 11, 13, 15, 17],
+        labels = [];
+      } else {
+        var div = L.DomUtil.create('div', 'info legend'),
+        grades = [1, 2, 3, 4, 5, 6, 7],
+        labels = [];
+      }
+
+      // loop through our density intervals and generate a label with a colored square for each interval
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+              '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+              grades[i] + "%" + (grades[i + 1] ? '&ndash;' + grades[i + 1] + "%" + '<br>' : '+');
+      }
+
+      return div;
+  };
+  legend.addTo(mymap);
 }
 
 window.updateMap = updateMap;
@@ -97,7 +134,6 @@ function highlightFeature(e) {
       layer.bringToFront();
   }
 }
-var clicked = false;
 
 function resetHighlight(e) {
   if (e != prev) {
@@ -114,7 +150,6 @@ function zoomToFeature(e) {
     geojson.resetStyle(prev.target);
   }
   highlightFeature(e)
-  clicked = true;
   var layer = e.target;
   prev = e;
   window.countryCode = layer.feature.properties.adm0_a3;
@@ -149,24 +184,5 @@ function resetMap() {
 
 window.resetMap = resetMap;
 
-var legend = L.control({position: 'bottomright'});
-
-legend.onAdd = function (mymap) {
-
-    var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 7, 9, 11, 13, 15, 17],
-        labels = [];
-
-    // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + "%" + (grades[i + 1] ? '&ndash;' + grades[i + 1] + "%" + '<br>' : '+');
-    }
-
-    return div;
-};
-
-legend.addTo(mymap);
 
 updateMap();
