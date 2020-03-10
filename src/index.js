@@ -88,6 +88,7 @@ window.filter_data_year = filter_data_year;
 // var counterPie = 1;
 
 function clickSchi() {
+  smoothScroll(document.getElementById("schi-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("schi-definition").classList;
   console.log("get id!");
@@ -101,6 +102,7 @@ function clickSchi() {
 }
 
 function clickBp() {
+  smoothScroll(document.getElementById("schi-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("bp-definition").classList;
   console.log("get id!");
@@ -114,6 +116,7 @@ function clickBp() {
 }
 
 function clickEat() {
+  smoothScroll(document.getElementById("eat-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("eat-definition").classList;
   console.log("get id!");
@@ -127,6 +130,7 @@ function clickEat() {
 }
 
 function clickAn() {
+  smoothScroll(document.getElementById("eat-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("an-definition").classList;
   console.log("get id!");
@@ -140,6 +144,7 @@ function clickAn() {
 }
 
 function clickDrug() {
+  smoothScroll(document.getElementById("jiu-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("drug-definition").classList;
   console.log("get id!");
@@ -153,6 +158,7 @@ function clickDrug() {
 }
 
 function clickDp() {
+  smoothScroll(document.getElementById("jiu-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("dp-definition").classList;
   console.log("get id!");
@@ -166,6 +172,7 @@ function clickDp() {
 }
 
 function clickJiu() {
+  smoothScroll(document.getElementById("jiu-definition"));
   removeHighlights();
   var myButtonClasses = document.getElementById("jiu-definition").classList;
   console.log("get id!");
@@ -336,4 +343,27 @@ disorder.oninput = function() {
 }
 window.showGraph = showGraph;
 window.showPie = showPie;
+
+window.smoothScroll = function(target) {
+  var scrollContainer = target;
+  do { //find scroll container
+      scrollContainer = scrollContainer.parentNode;
+      if (!scrollContainer) return;
+      scrollContainer.scrollTop += 1;
+  } while (scrollContainer.scrollTop == 0);
+
+  var targetY = 0;
+  do { //find the top of target relatively to the container
+      if (target == scrollContainer) break;
+      targetY += target.offsetTop;
+  } while (target = target.offsetParent);
+
+  scroll = function(c, a, b, i) {
+      i++; if (i > 30) return;
+      c.scrollTop = a + (b - a) / 37.5 * i;
+      setTimeout(function(){ scroll(c, a, b, i); }, 20);
+  }
+  // start scrolling
+  scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
+}
 
