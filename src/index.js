@@ -3,6 +3,11 @@ document.getElementById("close").onclick = function() {
   document.getElementById("container").style.display = "none";
   document.getElementById("chartContainer").style.display = "none";
   document.getElementById("pieContainer").style.display = "none";
+  removeHighlights();
+  window.resetMap();
+}
+
+function removeHighlights() {
   var schi = document.getElementById("schi-definition").classList;
   schi.remove("beige");
   var bp = document.getElementById("bp-definition").classList;
@@ -17,7 +22,6 @@ document.getElementById("close").onclick = function() {
   dp.remove("beige");
   var jiu = document.getElementById("jiu-definition").classList;
   jiu.remove("beige");
-  window.resetMap();
 }
 
 // You can require libraries
@@ -84,6 +88,7 @@ window.filter_data_year = filter_data_year;
 // var counterPie = 1;
 
 function clickSchi() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("schi-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -96,6 +101,7 @@ function clickSchi() {
 }
 
 function clickBp() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("bp-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -108,6 +114,7 @@ function clickBp() {
 }
 
 function clickEat() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("eat-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -120,6 +127,7 @@ function clickEat() {
 }
 
 function clickAn() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("an-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -132,6 +140,7 @@ function clickAn() {
 }
 
 function clickDrug() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("drug-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -144,6 +153,7 @@ function clickDrug() {
 }
 
 function clickDp() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("dp-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
@@ -156,6 +166,7 @@ function clickDp() {
 }
 
 function clickJiu() {
+  removeHighlights();
   var myButtonClasses = document.getElementById("jiu-definition").classList;
   console.log("get id!");
   if (myButtonClasses.contains("beige")) {
