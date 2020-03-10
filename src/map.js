@@ -47,21 +47,21 @@ function drawAll() {
 
 function getColor(d) {
   return  d == undefined? 'white':
-          d > 17 ? '#94495D' :
-          d > 15  ? '#A65158' :
-          d > 13  ? '#B76459' :
-          d > 11  ? '#DBA169' :
-          d > 9   ? '#EDC570' :
-          d > 7   ? '#FFED78' :
-          d > 5   ? '#FDD686' :
-          d > 3   ? '#FBC493' :
-          d > 2   ? '#FAB9A0' :
-          d > 1   ? '#F9B3AD' :
-          d > 0.5 ? '#F8B9C0' :
-          d > 0.4 ? '#F8C5D5' :
-          d > 0.3 ? '#F8D0E4' :
-          d > 0.2 ? '#F9DBF0' :
-          '#FAE5F8';
+          d > 17 ? '#800318' :
+          d > 15  ? '#950909' :
+          d > 13  ? '#AA2810' :
+          d > 11  ? '#BF4C19' :
+          d > 9   ? '#D57323' :
+          d > 7   ? '#EA9B2F' :
+          d > 5   ? '#FFC33C' :
+          d > 3   ? '#FFB943' :
+          d > 2   ? '#FFED62' :
+          d > 1   ? '#FFF870' :
+          d > 0.5 ? '#FFFF7F' :
+          d > 0.4 ? '#FFFFA0' :
+          d > 0.3 ? '#FFFFB2' :
+          d > 0.2 ? '#FFFFC4' :
+          '#FFFFD8';
 }
 
 var legend
