@@ -44,24 +44,71 @@ function drawAll() {
   }
 }
 
-function getColor(d) {
-  if (window.disorder_type == "total") {
-    return d > 17 ? '#800026' :
-            d > 15  ? '#BD0026' :
-            d > 13  ? '#E31A1C' :
-            d > 11  ? '#FC4E2A' :
-            d > 9   ? '#FD8D3C' :
-            d > 7   ? '#FEB24C' :
-                    '#FFEDA0';
-    } else{  
-      return d > 7 ? '#800026' :
-              d > 6  ? '#BD0026' :
-              d > 5  ? '#E31A1C' :
-              d > 4  ? '#FC4E2A' :
-              d > 3  ? '#FD8D3C' :
-              d > 2  ? '#FEB24C' :
-                        '#FFEDA0';                   
+function rgbaToHex(color) {
+  var values = color
+    .replace(/rgba?\(/, '')
+    .replace(/\)/, '')
+    .replace(/[\s+]/g, '')
+    .split(',');
+  var a = parseFloat(values[3] || 1),
+    r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
+    g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
+    b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255);
+
+  return "#" +
+    ("0" + r.toString(16)).slice(-2) +
+    ("0" + g.toString(16)).slice(-2) +
+    ("0" + b.toString(16)).slice(-2);
+}
+
+function getColorByNumber(n,max) {
+  let halfMax = max / 2  //最大数值的二分之一
+    //var 百分之一 = (单色值范围) / halfMax;  单颜色的变化范围只在50%之内
+    var one = 255 / halfMax; 
+    var r = 0;
+    var g = 0;
+    var b = 0;
+
+
+    if (n < halfMax) {
+      // 比例小于halfMax的时候红色是越来越多的,直到红色为255时(红+绿)变为黄色.
+      r = one * n;  
+      g = 255;
     }
+
+    if (n >= halfMax) {
+      // 比例大于halfMax的时候绿色是越来越少的,直到0 变为纯红
+      g = (255 - ((n - halfMax) * one)) < 0 ? 0 : (255 - ((n - halfMax) * one))
+      r = 255;
+
+    }
+    r = parseInt(r);// 取整
+    g = parseInt(g);// 取整
+    b = parseInt(b);// 取整
+
+    // console.log(r,g,b)
+    return rgbaToHex("rgb(" + r + "," + g + "," + b + ")");
+}
+
+function getColor(d) {
+  return getColorByNumber(d, 17);
+  // if (window.disorder_type == "total") {
+  //   return d > 17 ? '#800026' :
+  //           d > 15  ? '#BD0026' :
+  //           d > 13  ? '#E31A1C' :
+  //           d > 11  ? '#FC4E2A' :
+  //           d > 9   ? '#FD8D3C' :
+  //           d > 7   ? '#FEB24C' :
+  //                   '#FFEDA0';
+  //   } else{  
+  //     return d > 7 ? '#800026' :
+  //             d > 6  ? '#BD0026' :
+  //             d > 5  ? '#E31A1C' :
+  //             d > 4  ? '#FC4E2A' :
+  //             d > 3  ? '#FD8D3C' :
+  //             d > 2  ? '#FEB24C' :
+  //                       '#FFEDA0';                   
+  //   }
 }
 
 var legend
@@ -82,7 +129,7 @@ async function updateMap() {
         labels = [];
       } else {
         var div = L.DomUtil.create('div', 'info legend'),
-        grades = [1, 2, 3, 4, 5, 6, 7],
+        grades = [0, 1, 2, 3, 4, 5, 6],
         labels = [];
       }
 
