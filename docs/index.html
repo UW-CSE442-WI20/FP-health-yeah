@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Health Yeah</title>
+    <link rel="stylesheet" type="text/css" href="https://uw-cse442-wi20.github.io/FP-health-yeah/src.4948084a.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/require.88d67074.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/countries.6c6b8356.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+  </head>
+  <body>
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/bubbleAnimation.4d656cf8.js" style="display: flex"></script>
+    <h1>Health Yeah</h1>
+    <p style="text-align: center; margin-top: 5%;">Our map reflects mental health situations around the world! Try clicking on different countries!<br>
+      The charts reflect the percentages of each disorder among the total population in the current country in each year<br>
+      We can see that the percentages change slightly among different years<br>
+    </p>
+    
+    <div id="selection"> 
+      <div id="yearD">
+        <div class="sliderContainer">
+          <p id="year">Year: <span id="yearDisplay"></span></p>
+          1990
+          <input type="range" min="1990" max="2017" value="1990" class="slider" id="yearRange">
+          2017
+        </div>
+      </div>
+      <div id="types" style="padding-bottom: 15px">
+        <select name="disorder" id="disorder">
+          <option value="total" selected="">All</option>
+          <option value="schizophrenia">Schizophrenia</option>
+          <option value="bipolar">Bipolar disorder</option>
+          <option value="eating">Eating disorders</option>
+          <option value="anxiety">Anxiety disorders</option>
+          <option value="drug">Drug use disorders</option>
+          <option value="depression">Depression</option>
+          <option value="alcohol">Alcohol use disorders</option>
+        </select> 
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-evenly;flex-direction:column;align-items:center;">
+        <div id="graphContainer">
+          <div id="mapid"></div>
+          <div id="container" style="display: none; border-radius: 10px;">
+            <div id="buttonContainer" style="text-align: right;">
+              <button type="button" id="close">X</button>
+            </div>
+            <div id="noData" style="display: none; text-align:center;"></div>
+            <div id="chartContainer" style="display: none;"></div>
+            <div id="pieContainer" style="display: none;"></div>
+          </div>
+        </div>
+    </div>
+
+    <!-- back to top button -->
+    <button onclick="body.scrollTop = 0; documentElement.scrollTop = 0;" id="topBtn" title="Back to top">Top</button>
+  
+     <!-- definitions -->
+    <div id="definitions" style="height: 800px; width: 80%; margin-left: auto; margin-right: auto; margin-top: 80px; justify-content: center; margin-bottom: 80px;">
+      <div>
+        <div id="schi-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Schizophrenia</h2>
+          <p>A long-term mental disorder of a type involving a breakdown in the relation between thought, emotion, and behavior, leading to faulty perception, inappropriate actions and feelings, withdrawal from reality and personal relationships into fantasy and delusion, and a sense of mental fragmentation.
+          </p>
+        </div>
+        <div id="bp-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Bipolar Disorder</h2>
+          <p>A mental disorder that causes unusual shifts in mood, energy, activity levels, concentration, and the ability to carry out day-to-day tasks.</p>
+        </div>
+      </div>
+
+      <div>
+        <div id="eat-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Eating Disorder</h2>
+          <p>Eating disorders are illnesses in which the people experience severe disturbances in their eating behaviors and related thoughts and emotions. People with eating disorders typically become pre-occupied with food and their body weight.</p>
+        </div>
+        <div id="an-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Anxiety Disorders</h2>
+          <p>Anxiety disorders are a group of mental disorders characterized by significant feelings of anxiety and fear. Anxiety is a worry about future events, and fear is a reaction to current events. These feelings may cause physical symptoms, such as a fast heart rate and shakiness.</p>
+         </div>
+      </div>
+
+      <div>
+        <div id="drug-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Drug Use Disorder</h2>
+          <p>Drug addiction, also called substance use disorder, is a disease that affects a person's brain and behavior and leads to an inability to control the use of a legal or illegal drug or medication. Substances such as alcohol, marijuana and nicotine also are considered drugs.</p>
+        </div>
+        <div id="dp-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Depression</h2>
+          <p>Depression (major depressive disorder) is a common and serious medical illness that negatively affects how you feel, the way you think and how you act. Fortunately, it is also treatable. Depression causes feelings of sadness and/or a loss of interest in activities once enjoyed. It can lead to a variety of emotional and physical problems and can decrease a person’s ability to function at work and at home.</p>
+        </div>
+      </div>
+
+      <div>
+        <div id="jiu-definition" style="display: inline-block; width: 40%; height: 230px; vertical-align: middle; margin-left: 8%;">
+          <h2>Alcohol Use Disorder</h2>
+          <p>Alcohol use disorder (which includes a level that's sometimes called alcoholism) is a pattern of alcohol use that involves problems controlling your drinking, being preoccupied with alcohol, continuing to use alcohol even when it causes problems, having to drink more to get the same effect, or having withdrawal symptoms when you rapidly decrease or stop drinking.</p>
+        </div>
+      </div>
+    </div>
+
+   
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/src.b5b126a3.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/map.afadb7d7.js"></script>
+    <script src="https://uw-cse442-wi20.github.io/FP-health-yeah/backToTopBtn.207c7bfb.js"></script>
+
+  </body>
+</html>
